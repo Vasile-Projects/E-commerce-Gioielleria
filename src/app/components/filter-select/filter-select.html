@@ -1,0 +1,16 @@
+<div class="filter-select-bar">
+  <app-category-chip
+    [category]="allCategory()"
+    [active]="isAllActive()"
+    (selected)="onAllSelect()" />
+
+  <select
+    class="filter-select"
+    [class.filter-select--active]="!isAllActive()"
+    (change)="onSelectChange($event)">
+    <option value="" [selected]="isAllActive()">{{ placeholder() }}</option>
+    @for (cat of categories(); track cat.id) {
+      <option [value]="cat.id" [selected]="activeId() === cat.id">{{ cat.name }}</option>
+    }
+  </select>
+</div>

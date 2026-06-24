@@ -1,0 +1,9 @@
+<div [class.text-center]="align() === 'center'">
+  @if (label()) {
+    <span class="section-header-label">{{ label() }}</span>
+  }
+  <h2 class="mt-2 mb-0">{{ title() }}</h2>
+  @if (showDivider()) {
+    <div class="section-divider" [class.mx-auto]="align() === 'center'"></div>
+  }
+</div>

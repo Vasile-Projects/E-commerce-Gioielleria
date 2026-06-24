@@ -1,0 +1,27 @@
+.cart-page {
+  padding-bottom: 5rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--transition);
+  margin-bottom: 1.5rem;
+}
+
+.back-link:hover {
+  color: var(--color-text);
+}
+
+.cart-items-list {
+  border-top: 1px solid var(--color-border);
+}

@@ -1,0 +1,133 @@
+<nav class="header-gj"
+     [class.header-transparent]="isTransparent()"
+     [class.header-menu-open]="mobileMenuOpen()">
+
+  <div class="gj-container d-flex align-items-center" style="height: var(--header-height)">
+
+    <!-- Brand -->
+    <a class="brand-gj" routerLink="/">
+      <span class="brand-block">
+        <span class="brand-vz">
+          <span class="brand-v">V</span><span class="brand-z">Z</span>
+        </span>
+        <i class="bi bi-gem brand-gem"></i>
+        <span class="brand-name">GIOIELLI</span>
+      </span>
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="d-none d-lg-flex align-items-center gap-4 ms-auto">
+      <a class="nav-gj"
+         routerLink="/"
+         routerLinkActive="nav-active"
+         ariaCurrentWhenActive="page"
+         [routerLinkActiveOptions]="{ exact: true }">
+        Home
+      </a>
+      <a class="nav-gj"
+         routerLink="/products"
+         routerLinkActive="nav-active"
+         ariaCurrentWhenActive="page">
+        Catalogo
+      </a>
+
+      <!-- Cart -->
+      <a class="nav-icon-gj" routerLink="/carrello" aria-label="Carrello">
+        <i class="bi bi-bag"></i>
+        @if (cartCount() > 0) {
+          <span class="cart-badge">{{ cartCount() }}</span>
+        }
+      </a>
+
+      <!-- Account (solo se loggato) -->
+      @if (isLoggedIn()) {
+        <div class="user-dropdown-wrapper">
+          <button class="nav-icon-gj"
+                  [attr.aria-expanded]="userDropdownOpen()"
+                  aria-label="Account"
+                  (click)="toggleUserDropdown($event)">
+            <i class="bi bi-person"></i>
+          </button>
+          @if (userDropdownOpen()) {
+            <ul class="user-dropdown-menu">
+              <li class="user-dropdown-name">{{ userDisplayName() }}</li>
+              <li class="user-dropdown-divider"></li>
+              <li>
+                <a class="user-dropdown-item" routerLink="/ordini" (click)="userDropdownOpen.set(false)">I miei ordini</a>
+              </li>
+              <li>
+                <button class="user-dropdown-item" (click)="requestLogout()">Disconnetti</button>
+              </li>
+            </ul>
+          }
+        </div>
+      }
+
+    </div>
+
+    <!-- Mobile toggler -->
+    <button class="header-toggler ms-auto d-lg-none"
+            type="button"
+            (click)="toggleMobileMenu()"
+            [attr.aria-expanded]="mobileMenuOpen()"
+            aria-controls="mobile-nav"
+            aria-label="Menu">
+      <i class="bi bi-list fs-4"></i>
+    </button>
+
+  </div>
+
+  <!-- Mobile nav -->
+  @if (mobileMenuOpen()) {
+    <div id="mobile-nav" class="mobile-nav gj-container py-3 d-flex d-lg-none flex-column gap-3">
+      <a class="nav-gj"
+         routerLink="/"
+         routerLinkActive="nav-active"
+         ariaCurrentWhenActive="page"
+         [routerLinkActiveOptions]="{ exact: true }"
+         (click)="closeMobileMenu()">
+        Home
+      </a>
+      <a class="nav-gj"
+         routerLink="/products"
+         routerLinkActive="nav-active"
+         ariaCurrentWhenActive="page"
+         (click)="closeMobileMenu()">
+        Catalogo
+      </a>
+      <a class="nav-gj d-flex align-items-center gap-2"
+         routerLink="/carrello"
+         routerLinkActive="nav-active"
+         ariaCurrentWhenActive="page"
+         (click)="closeMobileMenu()">
+        Carrello
+        @if (cartCount() > 0) {
+          <span class="cart-badge-inline">{{ cartCount() }}</span>
+        }
+      </a>
+      @if (isLoggedIn()) {
+        <a class="nav-gj"
+           routerLink="/ordini"
+           routerLinkActive="nav-active"
+           (click)="closeMobileMenu()">
+          I miei ordini
+        </a>
+        <button class="nav-gj text-start border-0 bg-transparent p-0"
+                (click)="requestLogout()">
+          Disconnetti
+        </button>
+      }
+    </div>
+  }
+
+</nav>
+
+<app-confirm-modal
+  [visible]="showLogoutModal()"
+  title="Disconnettersi?"
+  message="Verrai disconnesso dal tuo account."
+  confirmText="Disconnetti"
+  [confirmLoading]="isLoggingOut()"
+  (confirmed)="logout()"
+  (cancelled)="showLogoutModal.set(false)">
+</app-confirm-modal>

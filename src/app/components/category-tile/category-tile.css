@@ -1,0 +1,35 @@
+.cat-tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.25rem 1rem;
+  background: none;
+  border: 1px solid var(--color-border);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color var(--transition), background-color var(--transition);
+}
+
+.cat-tile:hover {
+  border-color: var(--color-text);
+  background-color: var(--color-surface);
+}
+
+.cat-tile-name {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+}
+
+.cat-tile-arrow {
+  font-size: 0.85rem;
+  color: var(--color-gold);
+  transition: transform var(--transition);
+}
+
+.cat-tile:hover .cat-tile-arrow {
+  transform: translateX(4px);
+}

@@ -1,0 +1,52 @@
+<form [formRoot]="formTree">
+
+  <h6 class="label-section mb-4">Accedi al tuo account</h6>
+
+  <div class="d-flex flex-column gap-3 mb-4">
+
+    <div>
+      <label class="form-label" for="login-email">Email</label>
+      <input id="login-email" type="email" class="form-control"
+             [formField]="formTree.email"
+             [class.is-invalid]="formTree.email().invalid() && formTree.email().touched()">
+      @if (formTree.email().invalid() && formTree.email().touched()) {
+        @if (emailRequired()) {
+          <div class="invalid-feedback d-block">Email obbligatoria</div>
+        } @else if (emailFormat()) {
+          <div class="invalid-feedback d-block">Inserisci un indirizzo email valido</div>
+        }
+      }
+    </div>
+
+    <div>
+      <label class="form-label" for="login-password">Password</label>
+      <input id="login-password" type="password" class="form-control"
+             [formField]="formTree.password"
+             [class.is-invalid]="(formTree.password().invalid() && formTree.password().touched()) || serverError() !== null">
+      @if (formTree.password().invalid() && formTree.password().touched()) {
+        @if (pwRequired()) {
+          <div class="invalid-feedback d-block">Password obbligatoria</div>
+        } @else if (pwTooShort()) {
+          <div class="invalid-feedback d-block">Minimo 8 caratteri</div>
+        } @else if (pwNoUppercase()) {
+          <div class="invalid-feedback d-block">Deve contenere almeno una lettera maiuscola</div>
+        }
+      }
+      @if (serverError()) {
+        <div class="invalid-feedback d-block">{{ serverError() }}</div>
+      }
+    </div>
+
+  </div>
+
+  <div class="d-flex align-items-center gap-3">
+    <app-button text="Accedi" variant="primary" btnType="submit" [loading]="loading()" (click$)="onSubmit()"></app-button>
+    <app-button text="← Torna al carrello" variant="ghost" (click$)="backToCart.emit()"></app-button>
+  </div>
+
+  <div class="mt-4 pt-3 border-top text-center">
+    <span class="text-muted small">Non hai un account? </span>
+    <a class="text-gold small fw-medium text-decoration-none" style="cursor:pointer" (click)="registerDirect.emit()">Registrati</a>
+  </div>
+
+</form>

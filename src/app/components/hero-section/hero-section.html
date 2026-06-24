@@ -1,0 +1,17 @@
+<section class="hero-section">
+  <img class="hero-bg" [src]="imageUrl()" alt="" fetchpriority="high" loading="eager">
+  <div class="hero-overlay">
+    <div class="gj-container text-center text-white">
+      <h1 class="hero-title">{{ title() }}</h1>
+      @if (subtitle()) {
+        <p class="hero-subtitle mt-3">{{ subtitle() }}</p>
+      }
+      <div class="mt-5">
+        <app-button
+          variant="ghost"
+          text="Scopri la collezione"
+          (click$)="onCtaClick()" />
+      </div>
+    </div>
+  </div>
+</section>

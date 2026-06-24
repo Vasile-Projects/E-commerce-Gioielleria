@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320">
+  <rect width="400" height="320" fill="#f5f5f0"/>
+
+  <!-- Diamond gem shape -->
+  <g transform="translate(200, 140)">
+    <!-- Top facets -->
+    <polygon points="0,-75 45,-20 0,0 -45,-20" fill="#e8e4dc" stroke="#c8bfa8" stroke-width="1.5"/>
+    <polygon points="0,-75 75,15 45,-20"         fill="#d8d2c8" stroke="#c8bfa8" stroke-width="1.5"/>
+    <polygon points="0,-75 -45,-20 -75,15"        fill="#e2ddd4" stroke="#c8bfa8" stroke-width="1.5"/>
+    <!-- Bottom facets -->
+    <polygon points="45,-20 75,15 0,75 0,0"       fill="#cfc9be" stroke="#c8bfa8" stroke-width="1.5"/>
+    <polygon points="-45,-20 0,0 0,75 -75,15"     fill="#d8d2c8" stroke="#c8bfa8" stroke-width="1.5"/>
+    <polygon points="-75,15 0,75 75,15"           fill="#c8c2b8" stroke="#c8bfa8" stroke-width="1.5"/>
+    <polygon points="-45,-20 0,0 45,-20"          fill="#ede9e2" stroke="#c8bfa8" stroke-width="1.5"/>
+  </g>
+
+  <!-- Label -->
+  <text x="200" y="268" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#a09880" letter-spacing="2">IMMAGINE NON DISPONIBILE</text>
+</svg>

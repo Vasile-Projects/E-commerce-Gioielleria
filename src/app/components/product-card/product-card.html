@@ -1,0 +1,23 @@
+@let p = product();
+
+<a class="card-gj rounded-1 overflow-hidden" [routerLink]="['/products', p.id]">
+
+  <div class="position-relative overflow-hidden">
+    <img [src]="thumbnail()" [alt]="p.name" class="card-img" loading="lazy" decoding="async" (error)="onImageError($event)">
+    @if (p.isFeatured) {
+      <span class="badge-gj position-absolute top-0 start-0 m-3">In evidenza</span>
+    }
+    @if (p.hasDiscount) {
+      <span class="badge-gj badge-gj--sale position-absolute top-0 end-0 m-3">-{{ discountBadge() }}%</span>
+    }
+  </div>
+
+  <div class="pt-3 px-1 pb-1 d-flex flex-column gap-1">
+    <span class="label-category label-category-link" (click)="onCategoryClick($event)">{{ p.categoryName }}</span>
+    <h3 class="card-name">{{ p.name }}</h3>
+    <div class="d-flex align-items-baseline gap-2 mt-1">
+      <span class="price">{{ p.priceSale | currency: 'EUR' }}</span>
+    </div>
+  </div>
+
+</a>

@@ -1,0 +1,93 @@
+.details-page {
+  padding-bottom: 5rem;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.back-btn:hover {
+  color: var(--color-text);
+}
+
+.details-price {
+  font-size: 1.75rem;
+}
+
+.qty-btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  background: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: border-color var(--transition), background-color var(--transition);
+}
+
+.qty-btn:hover:not(:disabled) {
+  border-color: var(--color-text);
+  background-color: var(--color-surface);
+}
+
+.qty-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.qty-value {
+  font-size: 1rem;
+  font-weight: 500;
+  min-width: 28px;
+  text-align: center;
+}
+
+.variant-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--color-border);
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition), background-color var(--transition), color var(--transition);
+}
+
+.variant-pill:hover:not(:disabled):not(.variant-pill--active) {
+  border-color: var(--color-text);
+  background-color: var(--color-surface);
+}
+
+.variant-pill--active {
+  border-color: var(--color-text);
+  background-color: var(--color-text);
+  color: var(--color-bg);
+}
+
+.variant-pill:disabled {
+  opacity: 0.35;
+  cursor: default;
+  text-decoration: line-through;
+}
+
+.details-toast {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+}

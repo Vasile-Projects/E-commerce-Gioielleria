@@ -1,0 +1,156 @@
+@let order = placedOrder();
+
+@if (order !== null) {
+
+  <div class="success-page gj-container d-flex flex-column align-items-center justify-content-center text-center">
+    <i class="bi bi-check-circle fs-1 text-success d-block mb-3"></i>
+    <h2 class="page-title mb-2">Ordine ricevuto!</h2>
+    @if (order !== null) {
+      <p class="text-muted mb-1">{{ formatOrderNumber(order.orderNumber, order.date) }}</p>
+    }
+    <p class="text-muted mb-5">Grazie per il tuo acquisto.</p>
+    <div class="d-flex gap-3">
+      <app-button text="I miei ordini" variant="outline" (click$)="onBackToOrders()"></app-button>
+      <app-button text="Torna alla home" variant="primary" (click$)="onBackToHome()"></app-button>
+    </div>
+  </div>
+
+} @else {
+
+  <div class="checkout-page gj-container page-content">
+
+    <h1 class="page-title mb-4">Riepilogo ordine</h1>
+
+    <div class="row g-4 g-lg-5 align-items-start">
+
+      <!-- Colonna sinistra: prodotti + indirizzo + pagamento -->
+      <div class="col-12 col-lg-7">
+
+        <h2 class="label-section mb-3">Prodotti</h2>
+        <div class="checkout-items-list mb-5">
+          @for (item of items(); track item.varianteId) {
+            <app-cart-item [item]="item" [readonly]="true"></app-cart-item>
+          }
+        </div>
+
+        <h2 class="label-section mb-3">Indirizzo di spedizione</h2>
+
+        @if (addressResource.isLoading()) {
+          <div class="placeholder-glow d-flex flex-column gap-2 mb-3">
+            <div class="placeholder w-100" style="height:3.5rem;border-radius:0.375rem"></div>
+            <div class="placeholder w-100" style="height:3.5rem;border-radius:0.375rem"></div>
+          </div>
+        } @else {
+          @let selectedId = selectedAddressId();
+          <div class="d-flex flex-column gap-2 mb-3">
+            @for (address of addresses(); track address.id) {
+              <label class="address-option d-flex align-items-start gap-3 p-3 rounded-1 border"
+                     [class.address-option--active]="selectedId === address.id">
+                <input type="radio" name="address"
+                       [checked]="selectedId === address.id"
+                       (change)="onAddressSelect(address.id)">
+                <div>
+                  <div class="small fw-medium">{{ addressLabel(address) }}</div>
+                  <div class="small text-muted">{{ address.street }}, {{ address.civico }} — {{ address.city }} {{ address.postalCode }} ({{ address.province }})</div>
+                </div>
+              </label>
+            }
+          </div>
+        }
+
+        @if (showAddressForm()) {
+          <div class="p-3 border rounded-1 mb-5">
+            <app-address-form
+              [loading]="isAddingAddress()"
+              (submitted)="onNewAddressSubmitted($event)"
+              (cancel)="onCancelAddressForm()">
+            </app-address-form>
+          </div>
+        } @else {
+          <button class="add-address-option d-flex align-items-center gap-3 p-3 rounded-1 w-100 mb-5"
+                  (click)="onShowAddressForm()">
+            <i class="bi bi-plus-circle"></i>
+            <span class="small fw-medium">Aggiungi nuovo indirizzo</span>
+          </button>
+        }
+
+        @if (addressError()) {
+          <div class="alert alert-danger mb-4 small" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>{{ addressError() }}
+          </div>
+        }
+
+        <h2 class="label-section mb-3">Metodo di pagamento</h2>
+
+        @let method = paymentMethod();
+        <div class="d-flex flex-column gap-2 mb-4">
+          @for (option of paymentOptions; track option.value) {
+            <label class="payment-option d-flex align-items-center gap-3 p-3 rounded-1 border"
+                   [class.payment-option--active]="method === option.value">
+              <input type="radio" name="payment"
+                     [checked]="method === option.value"
+                     (change)="onPaymentMethodChange(option.value)">
+              <i class="bi {{ paymentIcons[option.value] }}"></i>
+              <span>{{ option.label }}</span>
+            </label>
+          }
+        </div>
+
+      </div>
+
+      <!-- Colonna destra: totale + conferma -->
+      <div class="col-12 col-lg-5">
+        <div class="order-summary">
+
+          <h2 class="label-section mb-4">Totale ordine</h2>
+
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted small">Articoli ({{ count() }})</span>
+            <span class="small">{{ total() | currency: 'EUR' }}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted small">Spedizione</span>
+            <span class="small">Gratuita</span>
+          </div>
+
+          <hr class="my-3">
+
+          <div class="d-flex justify-content-between">
+            <span class="fw-medium">Totale</span>
+            <span class="price">{{ total() | currency: 'EUR' }}</span>
+          </div>
+
+        </div>
+
+        @if (checkoutError()) {
+          <div class="alert alert-danger mt-3 small" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>{{ checkoutError() }}
+          </div>
+        }
+
+        <div class="mt-4">
+          <app-button
+            text="Conferma ordine"
+            variant="primary"
+            [disabled]="selectedAddressId() === null"
+            (click$)="onConfirm()">
+          </app-button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+<app-confirm-modal
+  [visible]="showConfirmModal()"
+  title="Confermare l'ordine?"
+  message="Stai per completare l'acquisto."
+  confirmText="Conferma ordine"
+  [confirmLoading]="isPlacingOrder()"
+  (confirmed)="onConfirmOrder()"
+  (cancelled)="onCancelOrder()">
+</app-confirm-modal>

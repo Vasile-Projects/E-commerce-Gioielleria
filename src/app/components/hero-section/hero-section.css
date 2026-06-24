@@ -1,0 +1,51 @@
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background-color: #1a1208; /* base scura calda: le ombre affondano invece di sbianchirsi */
+}
+
+.hero-bg {
+  position: absolute;
+  inset: -2px; /* 2px overflow: elimina artefatti di bordo senza scale */
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(1.18) saturate(0.48);
+  opacity: 0.72;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 12, 2, 0.30) 0%,
+    rgba(20, 12, 2, 0.18) 45%,
+    rgba(255, 255, 255, 0.0) 72%,
+    rgba(255, 255, 255, 1.0) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-title {
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 480px;
+  margin-inline: auto;
+  line-height: 1.7;
+}

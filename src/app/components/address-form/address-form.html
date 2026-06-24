@@ -1,0 +1,62 @@
+<form [formRoot]="formTree">
+
+  <div class="row g-3 mb-4">
+
+    <div class="col-8">
+      <label class="form-label" for="addr-street">Via / Corso</label>
+      <input id="addr-street" type="text" class="form-control"
+             [formField]="formTree.street"
+             [class.is-invalid]="formTree.street().invalid() && formTree.street().touched()">
+      @if (formTree.street().invalid() && formTree.street().touched()) {
+        <div class="invalid-feedback d-block">Campo obbligatorio</div>
+      }
+    </div>
+
+    <div class="col-4">
+      <label class="form-label" for="addr-civico">Civico</label>
+      <input id="addr-civico" type="text" class="form-control"
+             [formField]="formTree.civico"
+             [class.is-invalid]="formTree.civico().invalid() && formTree.civico().touched()">
+      @if (formTree.civico().invalid() && formTree.civico().touched()) {
+        <div class="invalid-feedback d-block">Obbligatorio</div>
+      }
+    </div>
+
+    <div class="col-8">
+      <label class="form-label" for="addr-city">Città</label>
+      <input id="addr-city" type="text" class="form-control"
+             [formField]="formTree.city"
+             [class.is-invalid]="formTree.city().invalid() && formTree.city().touched()">
+      @if (formTree.city().invalid() && formTree.city().touched()) {
+        <div class="invalid-feedback d-block">Campo obbligatorio</div>
+      }
+    </div>
+
+    <div class="col-4">
+      <label class="form-label" for="addr-postalCode">CAP</label>
+      <input id="addr-postalCode" type="text" class="form-control"
+             [formField]="formTree.postalCode"
+             [class.is-invalid]="formTree.postalCode().invalid() && formTree.postalCode().touched()">
+      @if (formTree.postalCode().invalid() && formTree.postalCode().touched()) {
+        <div class="invalid-feedback d-block">5 cifre richieste</div>
+      }
+    </div>
+
+    <div class="col-12">
+      <label class="form-label" for="addr-province">Provincia</label>
+      <input id="addr-province" type="text" class="form-control"
+             [formField]="formTree.province"
+             [class.is-invalid]="formTree.province().invalid() && formTree.province().touched()">
+      @if (formTree.province().invalid() && formTree.province().touched()) {
+        <div class="invalid-feedback d-block">Campo obbligatorio</div>
+      }
+    </div>
+
+  </div>
+
+  <div class="d-flex align-items-center gap-3">
+    <app-button text="Salva indirizzo" variant="primary" btnType="submit" [loading]="loading()" (click$)="onSubmit()"></app-button>
+    <app-button text="Annulla" variant="ghost" (click$)="cancel.emit()"></app-button>
+  </div>
+
+</form>

@@ -1,0 +1,10 @@
+<button
+  [type]="btnType()"
+  [class]="variantClass()"
+  [disabled]="disabled() || loading()"
+  (click)="click$.emit($event)">
+  @if (loading()) {
+    <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+  }
+  {{ text() }}
+</button>

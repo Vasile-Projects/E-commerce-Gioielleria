@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>VZ Gioielli — Gioielli Artigianali</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Scopri la collezione di gioielli artigianali VZ Gioielli. Anelli, collane e bracciali realizzati con cura e passione.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="preconnect" href="https://gioielleria-api.ddzdev.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500&family=Inter:wght@400;500;600&display=swap">
+
+  <style>
+    #app-loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      z-index: 9999;
+    }
+    #app-loading .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #f0e6d3;
+      border-top-color: #C9A96E;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="app-loading"><div class="spinner"></div></div>
+  <app-root></app-root>
+</body>
+</html>

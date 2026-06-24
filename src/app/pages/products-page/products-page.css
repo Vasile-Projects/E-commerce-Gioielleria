@@ -1,0 +1,34 @@
+.products-page-header {
+  padding-bottom: 1rem;
+  background-color: var(--color-bg);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--transition);
+  margin-bottom: 1.5rem;
+}
+
+.back-link:hover {
+  color: var(--color-text);
+}
+
+.filter-section-title {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+  margin-top: 0.25rem;
+}

@@ -1,0 +1,315 @@
+/* ─── Design tokens ─────────────────────────────────────────── */
+:root {
+  --color-bg:           #FFFFFF;
+  --color-surface:      #F5F5F5;
+  --color-text:         #0D0D0D;
+  --color-text-muted:   #757575;
+  --color-gold:         #C9A96E;
+  --color-gold-dark:    #B8955A;
+  --color-border:       #EBEBEB;
+  --color-error:        #B04040;
+
+  --font-heading: 'Raleway', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  --radius-sm:  4px;
+  --radius-md:  8px;
+
+  --shadow-card:  0 4px 24px rgba(0, 0, 0, 0.07);
+  --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+  --transition: 0.22s ease;
+
+  --header-height: 80px;
+  --container-max: 1400px;
+}
+
+/* ─── Reset & base ──────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ─── Typography ────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(2.4rem, 5vw, 4rem);   font-weight: 200; }
+h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 300; }
+h3 { font-size: 1.25rem;                     font-weight: 400; }
+h4 { font-size: 1rem;                        font-weight: 400; }
+
+.label-category {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.label-category-link {
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.label-category-link:hover {
+  color: var(--color-gold);
+}
+
+.label-section {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.price {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.price-gold {
+  color: var(--color-gold-dark);
+}
+
+/* ─── Layout ────────────────────────────────────────────────── */
+.gj-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.page-offset {
+  padding-top: var(--header-height);
+}
+
+/* Pagine con contenuto sotto header fisso + spaziatura standard */
+.page-content {
+  padding-top: calc(var(--header-height) + 2.5rem);
+}
+
+/* Titolo h1 delle pagine interne */
+.page-title {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────── */
+
+.btn-gj,
+.btn-gj-outline,
+.btn-gj-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.75rem;
+  cursor: pointer;
+  transition: background-color var(--transition),
+              border-color var(--transition),
+              color var(--transition);
+}
+
+/* Primario — filled nero → hover oro */
+.btn-gj {
+  border: 1.5px solid var(--color-text);
+  background-color: var(--color-text);
+  color: var(--color-bg);
+}
+
+.btn-gj:hover {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-text);
+}
+
+/* Secondario — outline → hover filled nero */
+.btn-gj-outline {
+  border: 1.5px solid var(--color-text);
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.btn-gj-outline:hover {
+  background-color: var(--color-text);
+  color: var(--color-bg);
+}
+
+/* Ghost — per contesti scuri (hero) */
+.btn-gj-ghost {
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.btn-gj-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
+}
+
+/* Soft — per azioni secondarie come "carica altri" */
+.btn-gj-soft {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.65rem 2.25rem;
+  min-width: 11rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background-color var(--transition),
+              border-color var(--transition),
+              color var(--transition),
+              box-shadow var(--transition);
+}
+
+.btn-gj-soft:hover:not(:disabled) {
+  border-color: var(--color-gold);
+  color: var(--color-gold-dark);
+  background-color: rgba(201, 169, 110, 0.07);
+  box-shadow: 0 2px 12px rgba(201, 169, 110, 0.15);
+}
+
+.btn-gj-soft:active:not(:disabled) {
+  background-color: rgba(201, 169, 110, 0.14);
+  box-shadow: none;
+}
+
+.btn-gj-soft:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── Cards ─────────────────────────────────────────────────── */
+.card-gj {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  background: var(--color-bg);
+  border: none;
+  cursor: pointer;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.card-gj:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.card-gj img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* ─── Order summary (shared cart + checkout) ────────────────── */
+.order-summary {
+  border: 1px solid var(--color-border);
+  padding: 2rem;
+}
+
+/* ─── Badge ─────────────────────────────────────────────────── */
+.badge-gj {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  background-color: var(--color-gold);
+  color: var(--color-bg);
+}
+
+.badge-gj--sale {
+  background-color: #547A5E;
+  color: #fff;
+  border-radius: 3px;
+}
+
+/* ─── Dividers / accents ────────────────────────────────────── */
+.section-divider {
+  width: 2.5rem;
+  height: 1.5px;
+  background-color: var(--color-gold);
+  margin-block: 1rem;
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+
+/* Breakpoint lg (992px): header passa a layout mobile */
+@media (max-width: 991.98px) {
+  :root {
+    --header-height: 64px;
+  }
+}
+
+/* Breakpoint xs (576px): padding laterale ridotto */
+@media (max-width: 575.98px) {
+  .gj-container {
+    padding-inline: 1rem;
+  }
+}
+
+/* ─── Scrollbar (Webkit) ────────────────────────────────────── */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: #D8D8D8; }
+::-webkit-scrollbar-thumb  { background: #A8A8A8; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #888; }
+
+/* ─── Utilities ─────────────────────────────────────────────── */
+.text-gold   { color: var(--color-gold-dark) !important; }
+.text-muted  { color: var(--color-text-muted) !important; }
+.text-error  { color: var(--color-error) !important; }
+.bg-surface  { background-color: var(--color-surface); }
+.border-gj   { border: 1px solid var(--color-border); }

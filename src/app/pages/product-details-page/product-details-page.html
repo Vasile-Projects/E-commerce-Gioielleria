@@ -1,0 +1,162 @@
+<article class="details-page gj-container page-content">
+
+  <button class="back-btn d-flex align-items-center gap-2 mb-5" (click)="onNavigateBack()">
+    <i class="bi bi-arrow-left"></i>
+    <span>Torna al catalogo</span>
+  </button>
+
+  @if (productResource.isLoading()) {
+    <div class="row g-5">
+      <div class="col-12 col-lg-6">
+        <div class="placeholder-glow">
+          <div class="placeholder w-100 rounded" style="aspect-ratio:1/1"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 placeholder-glow d-flex flex-column gap-3">
+        <div class="placeholder w-25" style="height:0.875rem"></div>
+        <div class="placeholder w-75" style="height:2rem"></div>
+        <div class="placeholder w-33" style="height:1.5rem"></div>
+        <div class="placeholder w-100 mt-2" style="height:5rem"></div>
+        <div class="placeholder w-50 mt-3" style="height:2.75rem"></div>
+      </div>
+    </div>
+  } @else if (productResource.error()) {
+    <p class="text-muted text-center py-5">Impossibile caricare il prodotto. Riprova più tardi.</p>
+  } @else {
+    @let p = productResource.value();
+    @if (p) {
+      <div class="row g-5">
+
+        <div class="col-12 col-lg-6">
+          <app-image-gallery [images]="productImages()" [alt]="p.name"></app-image-gallery>
+        </div>
+
+        <div class="col-12 col-lg-6">
+
+          <a class="label-category label-category-link"
+             [routerLink]="['/products']"
+             [queryParams]="{ categoria: p.categoryId }">{{ p.categoryName }}</a>
+
+          <h1 class="page-title mt-2 mb-1">{{ p.name }}</h1>
+
+          @if (p.materialName) {
+            <p class="text-muted small mb-3">{{ p.materialName }}</p>
+          }
+
+          @if (p.karat || p.weightGrams) {
+            <div class="d-flex gap-4 mb-3">
+              @if (p.karat) {
+                <span class="small text-muted"><i class="bi bi-gem me-1"></i>{{ p.karat }}k</span>
+              }
+              @if (p.weightGrams) {
+                <span class="small text-muted"><i class="bi bi-box me-1"></i>{{ p.weightGrams }}g</span>
+              }
+            </div>
+          }
+
+          <!-- Prezzo -->
+          <div class="d-flex align-items-center gap-3 mb-4">
+            @if (p.hasDiscount) {
+              <span class="text-muted text-decoration-line-through small">{{ p.priceList | currency: 'EUR' }}</span>
+              <span class="price details-price">{{ p.priceSale | currency: 'EUR' }}</span>
+              @if (discountBadge() > 0) {
+                <span class="badge-gj badge-gj--sale">-{{ discountBadge() }}%</span>
+              }
+            } @else {
+              <span class="price details-price">{{ p.priceSale | currency: 'EUR' }}</span>
+            }
+          </div>
+
+          @if (p.description) {
+            <p class="text-muted mb-4">{{ p.description }}</p>
+          }
+
+          <!-- Selettore variante (solo se più di una) -->
+          @if (p.variants.length > 1) {
+            <div class="mb-4">
+              <p class="small fw-medium mb-2">Seleziona misura</p>
+              <div class="d-flex flex-wrap gap-2">
+                @for (v of p.variants; track v.id) {
+                  <button
+                    class="variant-pill"
+                    [class.variant-pill--active]="selectedVariant()?.id === v.id"
+                    [disabled]="v.stock === 0"
+                    (click)="onVariantSelect(v)">
+                    {{ v.value }}
+                    @if (v.stock === 0) {
+                      <span class="visually-hidden">(esaurito)</span>
+                    }
+                  </button>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Disponibilità -->
+          @if (stockMessage(); as msg) {
+            <p class="small mb-3" [class.text-muted]="!msg.danger" [class.text-error]="msg.danger">
+              {{ msg.text }}
+            </p>
+          }
+
+          <!-- Quantità -->
+          <div class="d-flex align-items-center gap-3 mb-5">
+            <button class="qty-btn"
+                    [disabled]="!canDecrement()"
+                    (click)="onDecrement()"
+                    aria-label="Diminuisci quantità">−</button>
+            <span class="qty-value">{{ selectedQuantity() }}</span>
+            <button class="qty-btn"
+                    [disabled]="!canIncrement()"
+                    (click)="onIncrement()"
+                    aria-label="Aumenta quantità">+</button>
+          </div>
+
+          <!-- Descrizioni categoria e materiale -->
+          @if (categoryWithDescription()?.description || materialWithDescription()?.description) {
+            <div class="details-info mb-5 pt-4 border-top">
+              @if (categoryWithDescription()?.description) {
+                <div class="mb-3">
+                  <p class="small text-muted mb-1">{{ p.categoryName }}</p>
+                  <p class="small text-secondary" style="line-height: 1.5;">{{ categoryWithDescription()?.description }}</p>
+                </div>
+              }
+              @if (materialWithDescription()?.description) {
+                <div>
+                  <p class="small text-muted mb-1">{{ p.materialName }}</p>
+                  <p class="small text-secondary" style="line-height: 1.5;">{{ materialWithDescription()?.description }}</p>
+                </div>
+              }
+            </div>
+          }
+
+          <app-button
+            text="Aggiungi al carrello"
+            variant="primary"
+            [disabled]="!canAddToCart()"
+            [loading]="isAdding()"
+            (click$)="onAddToCart()">
+          </app-button>
+
+          @if (addError()) {
+            <p class="text-error small mt-2">
+              <i class="bi bi-exclamation-circle me-1"></i>{{ addError() }}
+            </p>
+          }
+
+        </div>
+
+      </div>
+    }
+  }
+
+</article>
+
+<div class="position-fixed bottom-0 start-50 translate-middle-x pb-2" style="z-index: 1090; pointer-events: none;">
+  <div #toastEl class="toast details-toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body d-flex align-items-center gap-2">
+      <i class="bi bi-check-circle"></i>
+      Prodotto aggiunto al carrello
+    </div>
+  </div>
+</div>

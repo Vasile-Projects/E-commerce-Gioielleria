@@ -1,0 +1,27 @@
+@let imgs = images();
+@let idx = activeIndex();
+
+<div class="gallery">
+
+  <div class="gallery-main">
+    <img
+      [src]="imgs[idx]"
+      [alt]="alt()"
+      class="gallery-main-img"
+      (error)="onImageError($event)">
+  </div>
+
+  @if (imgs.length > 1) {
+    <div class="gallery-thumbs d-flex gap-2 mt-3">
+      @for (img of imgs; track $index) {
+        <button
+          class="gallery-thumb"
+          [class.gallery-thumb--active]="idx === $index"
+          (click)="setActive($index)">
+          <img [src]="img" [alt]="alt() + ' - foto ' + ($index + 1)" (error)="onImageError($event)">
+        </button>
+      }
+    </div>
+  }
+
+</div>

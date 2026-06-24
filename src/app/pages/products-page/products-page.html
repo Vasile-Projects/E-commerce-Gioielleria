@@ -1,0 +1,86 @@
+<div class="products-page-header page-content">
+  <div class="gj-container">
+    <button class="back-link" (click)="goToHome()">
+      <i class="bi bi-arrow-left"></i> Home
+    </button>
+    <app-section-header
+      label="Catalogo"
+      title="I Nostri Gioielli"
+      align="start"
+      [showDivider]="false">
+    </app-section-header>
+
+    <!-- Desktop: chips per categoria -->
+    <div class="d-none d-md-block">
+      <app-filter-bar
+        [categories]="displayedCategories()"
+        [activeId]="activeCategoryId()"
+        (categoryChange)="onCategoryChange($event)">
+      </app-filter-bar>
+    </div>
+
+    <!-- Mobile: chip Tutti + select per categoria -->
+    <div class="d-md-none">
+      <app-filter-select
+        [categories]="displayedCategories()"
+        [activeId]="activeCategoryId()"
+        placeholder="Seleziona categoria"
+        (categoryChange)="onCategoryChange($event)">
+      </app-filter-select>
+    </div>
+
+    @if (displayedMaterials().length > 0) {
+      <h3 class="filter-section-title">Filtra per:</h3>
+      <!-- Sempre chip Tutti + select per materiale -->
+      <app-filter-select
+        [categories]="displayedMaterials()"
+        [activeId]="activeMaterialId()"
+        placeholder="Seleziona materiale"
+        (categoryChange)="onMaterialChange($event)">
+      </app-filter-select>
+    }
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="gj-container py-5">
+
+  @if (isLoading()) {
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      @for (i of skeletonItems; track i) {
+        <div class="col">
+          <div class="placeholder-glow">
+            <div class="placeholder w-100 rounded" style="aspect-ratio:4/5"></div>
+            <div class="placeholder w-75 mt-3" style="height:1rem"></div>
+            <div class="placeholder w-50 mt-2" style="height:0.875rem"></div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (hasError()) {
+    <p class="text-muted text-center py-5">Impossibile caricare i prodotti. Riprova più tardi.</p>
+  } @else if (allProducts().length === 0) {
+    <p class="text-muted text-center py-5">Nessun prodotto trovato per questa categoria.</p>
+  } @else {
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      @for (product of allProducts(); track product.id) {
+        <div class="col">
+          <app-product-card [product]="product" (categoryClick)="onProductCategoryClick($event)"></app-product-card>
+        </div>
+      }
+    </div>
+
+    @if (hasMore()) {
+      <div class="text-center mt-5">
+        <app-button
+          text="Carica altri"
+          variant="soft"
+          [loading]="isLoadingMore()"
+          (click$)="loadMore()">
+        </app-button>
+      </div>
+    }
+  }
+
+</div>

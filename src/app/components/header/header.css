@@ -1,0 +1,284 @@
+/* ─── Base ───────────────────────────────────────────────────── */
+.header-gj {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(252, 249, 246, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: none;
+  transition: background-color 0.35s ease,
+    border-color 0.35s ease,
+    backdrop-filter 0.35s ease;
+}
+
+/* Stato trasparente — solo su hero homepage */
+.header-gj.header-transparent {
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+
+/* ─── Brand ──────────────────────────────────────────────────── */
+.brand-gj {
+  display: inline-flex;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.brand-block {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.brand-gem {
+  font-size: 0.68rem;
+  color: var(--color-gold);
+  line-height: 1;
+  align-self: center;
+  transition: color var(--transition);
+}
+
+.brand-vz {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+
+.brand-v {
+  color: var(--color-text);
+  transition: color var(--transition);
+}
+
+.brand-z {
+  color: var(--color-gold);
+  transition: color var(--transition);
+}
+
+.brand-name {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  line-height: 1;
+  transition: color var(--transition);
+}
+
+.header-transparent .brand-divider   { background-color: rgba(255, 255, 255, 0.45); }
+.header-transparent .brand-v,
+.header-transparent .brand-name      { color: rgba(255, 255, 255, 0.9); }
+.header-transparent .brand-z         { color: var(--color-gold); }
+
+/* ─── Nav links ──────────────────────────────────────────────── */
+.nav-gj {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 3px;
+  transition: color var(--transition);
+}
+
+.nav-gj::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width var(--transition);
+}
+
+.nav-gj:hover::after,
+.nav-gj.nav-active::after {
+  width: 100%;
+}
+
+.header-transparent .nav-gj {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.header-transparent .nav-gj:hover {
+  color: #ffffff;
+}
+
+/* ─── Nav icons (carrello, account) ─────────────────────────── */
+.nav-icon-gj {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.15rem;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.nav-icon-gj:hover {
+  color: var(--color-gold-dark);
+}
+
+.header-transparent .nav-icon-gj {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.header-transparent .nav-icon-gj:hover {
+  color: #ffffff;
+}
+
+/* ─── Cart badge ─────────────────────────────────────────────── */
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -9px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+  background-color: var(--color-gold);
+  color: var(--color-text);
+  border-radius: 8px;
+}
+
+.cart-badge-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  background-color: var(--color-gold);
+  color: var(--color-text);
+  border-radius: 9px;
+}
+
+/* ─── Mobile toggler ─────────────────────────────────────────── */
+.header-toggler {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--color-text);
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color var(--transition);
+}
+
+.header-transparent .header-toggler {
+  color: #ffffff;
+}
+
+/* ─── Mobile nav panel ───────────────────────────────────────── */
+.mobile-nav {
+  background: transparent;
+  border-top: none;
+  padding-bottom: 5rem;
+  animation: mobileNavIn 0.28s ease;
+}
+
+@keyframes mobileNavIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Nav: trasparente in cima, bianco-caldo opaco verso il basso */
+.header-gj.header-transparent.header-menu-open {
+  background: linear-gradient(to bottom,
+      rgba(252, 249, 246, 0.0) 0,
+      rgba(252, 249, 246, 0.12) calc(var(--header-height) - 70px),
+      rgba(252, 249, 246, 1.0) calc(var(--header-height) + 40px));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Testo scuro nel menu mobile — leggibile sul gradiente chiaro */
+.header-transparent .mobile-nav .nav-gj {
+  color: var(--color-text);
+}
+
+/* ─── User dropdown ──────────────────────────────────────────── */
+.user-dropdown-wrapper {
+  position: relative;
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 180px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--color-text);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  font-size: 0.85rem;
+  overflow: hidden;
+  z-index: 1001;
+  background: var(--color-bg);
+}
+
+.user-dropdown-name {
+  display: block;
+  background-color: var(--color-text);
+  color: var(--color-gold);
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+}
+
+.user-dropdown-divider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: 0;
+}
+
+.user-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.65rem 1.25rem;
+  color: var(--color-text);
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.user-dropdown-item:hover,
+.user-dropdown-item:focus {
+  text-decoration: underline;
+  text-decoration-color: var(--color-gold);
+  text-underline-offset: 3px;
+}

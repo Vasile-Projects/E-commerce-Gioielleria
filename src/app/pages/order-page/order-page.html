@@ -1,0 +1,33 @@
+<div class="order-page gj-container">
+
+  <div class="row justify-content-center">
+    <div class="col-6">
+
+      <h1 class="page-title mb-5">{{ pageTitle() }}</h1>
+
+      @if (step().kind === 'login') {
+        <app-login-form
+          [serverError]="loginError()"
+          [loading]="isLoading()"
+          (submitted)="onLoginSubmitted($event)"
+          (backToCart)="onBackToCart()"
+          (registerDirect)="onRegisterDirect()">
+        </app-login-form>
+      }
+
+      @if (step().kind === 'register') {
+        <app-register-form
+          [pendingEmail]="pendingEmail()"
+          [emailServerError]="registerEmailError()"
+          [generalServerError]="registerGeneralError()"
+          [loading]="isLoading()"
+          (submitted)="onRegisterSubmitted($event)"
+          (back)="onBackToLogin()"
+          (hasAccount)="onBackToLogin()">
+        </app-register-form>
+      }
+
+    </div>
+  </div>
+
+</div>

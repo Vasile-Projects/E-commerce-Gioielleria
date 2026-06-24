@@ -1,0 +1,15 @@
+<div class="filter-bar">
+  <app-category-chip
+    [category]="allCategory()"
+    [active]="isAllActive()"
+    [size]="size()"
+    (selected)="onCategorySelect($event)" />
+
+  @for (cat of categories(); track cat.id) {
+    <app-category-chip
+      [category]="cat"
+      [active]="activeId() === cat.id"
+      [size]="size()"
+      (selected)="onCategorySelect($event)" />
+  }
+</div>

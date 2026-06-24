@@ -1,0 +1,139 @@
+<form [formRoot]="formTree">
+
+  <h6 class="label-section mb-4">Crea il tuo account</h6>
+
+  <div class="d-flex flex-column gap-3 mb-4">
+
+    <div>
+      <label class="form-label" for="reg-email">Email</label>
+      <input id="reg-email" type="email" class="form-control"
+             [formField]="formTree.email"
+             [class.is-invalid]="(formTree.email().invalid() && formTree.email().touched()) || emailServerError() !== null">
+      @if (formTree.email().invalid() && formTree.email().touched()) {
+        @if (emailRequired()) {
+          <div class="invalid-feedback d-block">Email obbligatoria</div>
+        } @else if (emailFormat()) {
+          <div class="invalid-feedback d-block">Inserisci un indirizzo email valido</div>
+        }
+      }
+      @if (emailServerError()) {
+        <div class="invalid-feedback d-block">{{ emailServerError() }}</div>
+      }
+    </div>
+
+    <div class="row g-3">
+      <div class="col-6">
+        <label class="form-label" for="reg-firstName">Nome</label>
+        <input id="reg-firstName" type="text" class="form-control"
+               [formField]="formTree.firstName"
+               [class.is-invalid]="formTree.firstName().invalid() && formTree.firstName().touched()">
+        @if (formTree.firstName().invalid() && formTree.firstName().touched()) {
+          <div class="invalid-feedback d-block">Campo obbligatorio</div>
+        }
+      </div>
+
+      <div class="col-6">
+        <label class="form-label" for="reg-lastName">Cognome</label>
+        <input id="reg-lastName" type="text" class="form-control"
+               [formField]="formTree.lastName"
+               [class.is-invalid]="formTree.lastName().invalid() && formTree.lastName().touched()">
+        @if (formTree.lastName().invalid() && formTree.lastName().touched()) {
+          <div class="invalid-feedback d-block">Campo obbligatorio</div>
+        }
+      </div>
+    </div>
+
+    <div>
+      <label class="form-label" for="reg-password">Password</label>
+      <input id="reg-password" type="password" class="form-control"
+             [formField]="formTree.password"
+             [class.is-invalid]="formTree.password().invalid() && formTree.password().touched()">
+      @if (formTree.password().invalid() && formTree.password().touched()) {
+        @if (pwRequired()) {
+          <div class="invalid-feedback d-block">Password obbligatoria</div>
+        } @else if (pwTooShort()) {
+          <div class="invalid-feedback d-block">Minimo 8 caratteri</div>
+        } @else if (pwNoUppercase()) {
+          <div class="invalid-feedback d-block">Deve contenere almeno una lettera maiuscola</div>
+        }
+      }
+      @if (!formTree.password().touched() || formTree.password().valid()) {
+        <div class="form-text">Min. 8 caratteri, almeno una maiuscola</div>
+      }
+    </div>
+
+  </div>
+
+  <p class="label-section mb-3">Indirizzo di spedizione</p>
+
+  <div class="row g-3 mb-4">
+
+    <div class="col-8">
+      <label class="form-label" for="reg-street">Via / Corso</label>
+      <input id="reg-street" type="text" class="form-control"
+             [formField]="formTree.address.street"
+             [class.is-invalid]="formTree.address.street().invalid() && formTree.address.street().touched()">
+      @if (formTree.address.street().invalid() && formTree.address.street().touched()) {
+        <div class="invalid-feedback d-block">Campo obbligatorio</div>
+      }
+    </div>
+
+    <div class="col-4">
+      <label class="form-label" for="reg-civico">Civico</label>
+      <input id="reg-civico" type="text" class="form-control"
+             [formField]="formTree.address.civico"
+             [class.is-invalid]="formTree.address.civico().invalid() && formTree.address.civico().touched()">
+      @if (formTree.address.civico().invalid() && formTree.address.civico().touched()) {
+        <div class="invalid-feedback d-block">Obbligatorio</div>
+      }
+    </div>
+
+    <div class="col-8">
+      <label class="form-label" for="reg-city">Città</label>
+      <input id="reg-city" type="text" class="form-control"
+             [formField]="formTree.address.city"
+             [class.is-invalid]="formTree.address.city().invalid() && formTree.address.city().touched()">
+      @if (formTree.address.city().invalid() && formTree.address.city().touched()) {
+        <div class="invalid-feedback d-block">Campo obbligatorio</div>
+      }
+    </div>
+
+    <div class="col-4">
+      <label class="form-label" for="reg-postalCode">CAP</label>
+      <input id="reg-postalCode" type="text" class="form-control"
+             [formField]="formTree.address.postalCode"
+             [class.is-invalid]="formTree.address.postalCode().invalid() && formTree.address.postalCode().touched()">
+      @if (formTree.address.postalCode().invalid() && formTree.address.postalCode().touched()) {
+        <div class="invalid-feedback d-block">5 cifre richieste</div>
+      }
+    </div>
+
+    <div class="col-12">
+      <label class="form-label" for="reg-province">Provincia</label>
+      <input id="reg-province" type="text" class="form-control"
+             [formField]="formTree.address.province"
+             [class.is-invalid]="formTree.address.province().invalid() && formTree.address.province().touched()">
+      @if (formTree.address.province().invalid() && formTree.address.province().touched()) {
+        <div class="invalid-feedback d-block">Campo obbligatorio</div>
+      }
+    </div>
+
+  </div>
+
+  @if (generalServerError()) {
+    <p class="small mb-3 d-flex align-items-center gap-1" style="color: var(--color-error)">
+      <i class="bi bi-exclamation-circle"></i>{{ generalServerError() }}
+    </p>
+  }
+
+  <div class="d-flex align-items-center gap-3">
+    <app-button text="Crea account" variant="primary" btnType="submit" [loading]="loading()" (click$)="onSubmit()"></app-button>
+    <app-button text="← Indietro" variant="ghost" (click$)="back.emit()"></app-button>
+  </div>
+
+  <div class="mt-4 pt-3 border-top text-center">
+    <span class="text-muted small">Hai già un account? </span>
+    <a class="text-gold small fw-medium text-decoration-none" style="cursor:pointer" (click)="hasAccount.emit()">Accedi</a>
+  </div>
+
+</form>

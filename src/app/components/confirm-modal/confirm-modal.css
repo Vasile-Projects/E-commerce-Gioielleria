@@ -1,0 +1,38 @@
+.cm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.cm-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-bg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  padding: 2rem;
+}
+
+.cm-title {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.cm-message {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.75rem;
+}
+
+.cm-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  justify-content: space-evenly;
+}

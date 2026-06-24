@@ -1,0 +1,22 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build image and restart container
+        env:
+          MY_API_KEY: ${{ secrets.MY_API_KEY }}
+        run: |
+          MY_API_KEY=$MY_API_KEY docker compose build --no-cache
+          docker compose up -d

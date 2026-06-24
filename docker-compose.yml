@@ -1,0 +1,10 @@
+services:
+  e-commerce-gioielleria:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - MY_API_KEY=${MY_API_KEY}
+    ports:
+      - "8089:80"
+    restart: unless-stopped

@@ -1,0 +1,12 @@
+@if (visible()) {
+  <div class="cm-backdrop" (click)="onCancel()">
+    <div #cmCard class="cm-card" role="dialog" aria-modal="true" aria-labelledby="cm-dialog-title" tabindex="-1" (click)="$event.stopPropagation()">
+      <h2 id="cm-dialog-title" class="cm-title">{{ title() }}</h2>
+      <p class="cm-message">{{ message() }}</p>
+      <div class="cm-actions">
+        <app-button [text]="cancelText()" variant="outline" (click$)="onCancel()"></app-button>
+        <app-button [text]="confirmText()" variant="primary" [loading]="confirmLoading()" (click$)="onConfirm()"></app-button>
+      </div>
+    </div>
+  </div>
+}

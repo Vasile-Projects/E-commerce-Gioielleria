@@ -1,0 +1,117 @@
+<div class="cart-page gj-container page-content">
+
+  <button class="back-link" (click)="onContinueShopping()">
+    <i class="bi bi-arrow-left"></i> Catalogo
+  </button>
+
+  <h1 class="page-title mb-5">Il tuo carrello</h1>
+
+  @if (items().length === 0) {
+
+    <div class="text-center py-5">
+      <i class="bi bi-bag fs-1 text-muted d-block mb-3"></i>
+      <p class="text-muted mb-4">Il carrello è vuoto.</p>
+      <div class="d-flex justify-content-center gap-3">
+        <app-button
+          text="Continua lo shopping"
+          variant="primary"
+          (click$)="onContinueShopping()">
+        </app-button>
+        @if (!loggedIn()) {
+          <app-button
+            text="Accedi"
+            variant="outline"
+            (click$)="onCheckout()">
+          </app-button>
+        }
+      </div>
+    </div>
+
+  } @else {
+
+    <div class="row g-4 g-lg-5 align-items-start">
+
+      <!-- Lista prodotti -->
+      <div class="col-12 col-lg-7 d-flex flex-column">
+        <div class="cart-items-list">
+          @for (item of items(); track item.varianteId) {
+            <div class="position-relative">
+              @if (updatingId() === item.varianteId || removingId() === item.varianteId) {
+                <div class="cart-item-overlay d-flex align-items-center justify-content-center">
+                  <span class="spinner-border spinner-border-sm text-gold" role="status" aria-hidden="true"></span>
+                </div>
+              }
+              <app-cart-item
+                [item]="item"
+                (quantityChanged)="onQuantityChanged(item.varianteId, $event)"
+                (removed)="onRemove(item.varianteId)">
+              </app-cart-item>
+            </div>
+          }
+        </div>
+
+        <div class="mt-4">
+          <app-button
+            text="Svuota carrello"
+            variant="outline"
+            (click$)="onRequestClear()">
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Riepilogo -->
+      <div class="col-12 col-lg-5 d-flex flex-column">
+        <div class="order-summary">
+          <h2 class="label-section mb-4">Riepilogo ordine</h2>
+
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted small">Articoli ({{ count() }})</span>
+            <span class="small">{{ total() | currency: 'EUR' }}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted small">Spedizione</span>
+            <span class="small">Gratuita</span>
+          </div>
+
+          <hr class="my-3">
+
+          <div class="d-flex justify-content-between">
+            <span class="fw-medium">Totale</span>
+            <span class="price">{{ total() | currency: 'EUR' }}</span>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <app-button
+            text="Procedi all'ordine"
+            variant="primary"
+            (click$)="onCheckout()">
+          </app-button>
+        </div>
+      </div>
+
+    </div>
+
+  }
+
+</div>
+
+<app-confirm-modal
+  [visible]="showClearModal()"
+  title="Svuotare il carrello?"
+  message="Tutti i prodotti verranno rimossi dal carrello."
+  confirmText="Svuota"
+  [confirmLoading]="isClearingCart()"
+  (confirmed)="onConfirmClear()"
+  (cancelled)="onCancelClear()">
+</app-confirm-modal>
+
+<!-- Toast errori operazioni carrello -->
+<div class="position-fixed bottom-0 start-50 translate-middle-x pb-2" style="z-index: 1090; pointer-events: none;">
+  <div #errorToastEl class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body d-flex align-items-center gap-2">
+      <i class="bi bi-exclamation-circle"></i>
+      {{ cartError() }}
+    </div>
+  </div>
+</div>

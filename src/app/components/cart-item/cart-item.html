@@ -1,0 +1,36 @@
+@let i = item();
+
+<div class="cart-item">
+
+  <img class="cart-item-img" [src]="imageSrc()" [alt]="i.productName" (error)="onImageError($event)">
+
+  <div class="cart-item-body">
+
+    <div class="cart-item-info">
+      <h3 class="cart-item-name">{{ i.productName }}</h3>
+    </div>
+
+    <div class="cart-item-footer">
+      @if (!readonly()) {
+        <div class="d-flex align-items-center gap-2">
+          <button class="qty-btn" [attr.aria-label]="decrementLabel()" (click)="onDecrement()">−</button>
+          <span class="qty-value">{{ i.quantity }}</span>
+          <button class="qty-btn" [attr.aria-label]="incrementLabel()" (click)="onIncrement()">+</button>
+        </div>
+      } @else {
+        <span class="small text-muted">Qtà: {{ i.quantity }}</span>
+      }
+
+      <div class="cart-item-price-actions">
+        <span class="price">{{ (i.unitPrice * i.quantity) | currency: 'EUR' }}</span>
+        @if (!readonly()) {
+          <button class="remove-btn" [attr.aria-label]="removeLabel()" (click)="removed.emit()">
+            <i class="bi bi-trash"></i>
+          </button>
+        }
+      </div>
+    </div>
+
+  </div>
+
+</div>

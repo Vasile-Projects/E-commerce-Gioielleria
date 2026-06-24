@@ -1,0 +1,138 @@
+<app-hero-section
+  title="Arte che si indossa"
+  subtitle="Gioielli artigianali che raccontano storie uniche. Ogni pezzo è creato con cura e passione."
+  [imageUrl]="heroImage"
+  (ctaClick)="onCtaClick()">
+</app-hero-section>
+
+<!-- Prodotti in evidenza -->
+<section class="gj-container home-section">
+
+  <app-section-header
+    label="Collezione"
+    title="I nostri prodotti in evidenza"
+    align="center">
+  </app-section-header>
+
+  @if (featuredLoading()) {
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
+      @for (i of skeletonItems; track i) {
+        <div class="col">
+          <div class="placeholder-glow">
+            <div class="placeholder w-100 rounded" style="aspect-ratio:4/5"></div>
+            <div class="placeholder w-75 mt-3" style="height:1rem"></div>
+            <div class="placeholder w-50 mt-2" style="height:0.875rem"></div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (featuredError()) {
+    <p class="text-muted text-center py-4">Impossibile caricare i prodotti in evidenza.</p>
+  } @else {
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
+      @for (product of featuredItems(); track product.id) {
+        <div class="col">
+          <app-product-card [product]="product" (categoryClick)="onProductCategoryClick($event)"></app-product-card>
+        </div>
+      }
+    </div>
+
+    @if (featuredHasMore()) {
+      <div class="text-center mt-4">
+        <app-button
+          text="Carica altri"
+          variant="soft"
+          [loading]="featuredLoadingMore()"
+          (click$)="loadMoreFeatured()">
+        </app-button>
+      </div>
+    }
+  }
+
+</section>
+
+<div class="section-divider mx-auto"></div>
+
+<!-- Promozioni -->
+<section class="gj-container home-section">
+
+  <app-section-header
+    label="Offerte"
+    title="Promozioni"
+    align="center">
+  </app-section-header>
+
+  @if (discountedLoading()) {
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
+      @for (i of skeletonItems; track i) {
+        <div class="col">
+          <div class="placeholder-glow">
+            <div class="placeholder w-100 rounded" style="aspect-ratio:4/5"></div>
+            <div class="placeholder w-75 mt-3" style="height:1rem"></div>
+            <div class="placeholder w-50 mt-2" style="height:0.875rem"></div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (discountedError()) {
+    <p class="text-muted text-center py-4">Impossibile caricare le promozioni.</p>
+  } @else {
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
+      @for (product of discountedItems(); track product.id) {
+        <div class="col">
+          <app-product-card [product]="product" (categoryClick)="onProductCategoryClick($event)"></app-product-card>
+        </div>
+      }
+    </div>
+
+    @if (discountedHasMore()) {
+      <div class="text-center mt-4">
+        <app-button
+          text="Carica altri"
+          variant="soft"
+          [loading]="discountedLoadingMore()"
+          (click$)="loadMoreDiscounted()">
+        </app-button>
+      </div>
+    }
+  }
+
+</section>
+
+<div class="section-divider mx-auto"></div>
+
+<!-- Categorie -->
+<section class="gj-container home-section">
+
+  <app-section-header
+    label="Esplora"
+    title="Le Nostre Categorie"
+    align="center">
+  </app-section-header>
+
+  @if (categories.isLoading()) {
+    <div class="row row-cols-1 row-cols-md-3 g-3 mt-2">
+      @for (i of skeletonItems; track i) {
+        <div class="col">
+          <div class="placeholder-glow">
+            <div class="placeholder w-100 rounded" style="height:120px"></div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (categories.error()) {
+    <p class="text-muted text-center py-4">Impossibile caricare le categorie.</p>
+  } @else {
+    <div class="row row-cols-1 row-cols-md-3 g-3 mt-2">
+      @for (cat of displayedCategories(); track cat.id) {
+        <div class="col">
+          <app-category-tile
+            [category]="cat"
+            (selected)="onCategorySelect($event)">
+          </app-category-tile>
+        </div>
+      }
+    </div>
+  }
+
+</section>

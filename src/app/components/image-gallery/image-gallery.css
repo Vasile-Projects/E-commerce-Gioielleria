@@ -1,0 +1,42 @@
+.gallery-main {
+  overflow: hidden;
+}
+
+.gallery-main-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.gallery-thumb {
+  flex: 1;
+  padding: 0;
+  border: 1.5px solid transparent;
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+
+.gallery-thumb img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  opacity: 0.65;
+  transition: opacity var(--transition);
+}
+
+.gallery-thumb:hover img {
+  opacity: 0.9;
+}
+
+.gallery-thumb--active {
+  border-color: var(--color-text);
+}
+
+.gallery-thumb--active img {
+  opacity: 1;
+}

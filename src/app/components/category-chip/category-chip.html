@@ -1,0 +1,7 @@
+<button class="cat-chip"
+  [class.cat-chip--sm]="size() === 'sm'"
+  [class.cat-chip--active]="active()"
+  [attr.aria-pressed]="active()"
+  (click)="selected.emit(category())">
+  {{ category().name }}
+</button>
