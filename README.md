@@ -1,4 +1,4 @@
-# Product App
+# E-commerce-Gioielleria
 
 E-commerce frontend per gioielleria — catalogo prodotti, carrello, checkout e gestione ordini.
 
@@ -29,8 +29,6 @@ Il deploy avviene automaticamente al push sul branch `main` tramite GitHub Actio
 # build e avvio locale con Docker
 docker compose up --build
 ```
-
-Il branch `development` è il branch di lavoro. Per rilasciare in produzione, mergiare su `main`.
 
 ## Struttura route
 
