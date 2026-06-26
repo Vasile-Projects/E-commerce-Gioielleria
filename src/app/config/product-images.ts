@@ -1,6 +1,6 @@
-import { environment } from '../../environments/environment';
+import { API_BASE } from './api.config';
 
-const BASE = `${environment.mediaServerUrl}/media/vz/gioielleria/images/immagini_gioielli`;
+const BASE = `${API_BASE}/media/immagini_gioielli`;
 
 function range(category: string, prefix: string, count: number, overrides: Record<number, string> = {}): string[] {
   return Array.from({ length: count }, (_, i) => {

@@ -4,11 +4,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-
-# Recupera la chiave passata da docker compose e iniettala nel file di ambiente
-ARG MY_API_KEY
-RUN sed -i "s|process.env.API_KEY|${MY_API_KEY}|g" src/environments/environment.ts
-
 RUN npm run build
 
 # Stage 2: serve with nginx

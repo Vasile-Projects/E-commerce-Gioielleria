@@ -6,7 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { API_BASE } from '../../config/api.config';
 import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, catchError, of, switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -58,7 +58,7 @@ export class HomePage implements OnInit {
 
   readonly displayedCategories = computed<Category[]>(() => this.categories.value() ?? []);
 
-  readonly heroImage = `${environment.mediaServerUrl}/media/vz/gioielleria/images/immagini_gioielli/collane/collana1.avif`;
+  readonly heroImage = `${API_BASE}/media/immagini_gioielli/collane/collana1.avif`;
   readonly skeletonItems = [0, 1, 2];
 
   constructor() {
